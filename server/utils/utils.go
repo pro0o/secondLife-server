@@ -2,7 +2,10 @@ package utils
 
 import (
 	"encoding/json"
+	"math/rand"
 	"net/http"
+	"strconv"
+	"time"
 )
 
 func WriteJSON(w http.ResponseWriter, status int, v interface{}) error {
@@ -16,4 +19,9 @@ func WriteJSON(w http.ResponseWriter, status int, v interface{}) error {
 	}
 
 	return nil
+}
+
+func GenerateRandomCode() string {
+	rand.Seed(time.Now().UnixNano())
+	return strconv.Itoa(rand.Intn(900000) + 100000) // 6-digit code
 }
