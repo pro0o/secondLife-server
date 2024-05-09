@@ -13,7 +13,7 @@ type JSONObject struct {
 	ObjectDetected string `json:"objectDetected"`
 }
 
-func (h *APIServer) handleRecyclingData(w http.ResponseWriter, r *http.Request) error {
+func (h *APIServer) handleYoutubeSuggestion(w http.ResponseWriter, r *http.Request) error {
 	var obj JSONObject
 	err := json.NewDecoder(r.Body).Decode(&obj)
 	if err != nil {

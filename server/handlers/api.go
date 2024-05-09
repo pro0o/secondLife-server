@@ -41,8 +41,8 @@ func (h *APIServer) Run() {
 	router.HandleFunc("/login", makeHTTPHandleFunc(h.handleSendVerificationCode))
 	router.HandleFunc("/org", makeHTTPHandleFunc(h.orgHandler))
 	router.HandleFunc("/rewardPoints", makeHTTPHandleFunc(h.rewardPointsHandler))
-
-	router.HandleFunc("/recyclingData/videos-and-maps", makeHTTPHandleFunc(h.handleRecyclingData))
+	router.HandleFunc("/recyclingData/videos", makeHTTPHandleFunc(h.handleYoutubeSuggestion))
+	router.HandleFunc("/recyclingData/maps", makeHTTPHandleFunc(h.handleNearByData))
 
 	log.Print("Server running on port", h.listenAddr)
 	http.ListenAndServe(":8081", router)
