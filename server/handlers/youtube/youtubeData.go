@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"net/url"
 	"os"
 	"secondLife/parser"
 
@@ -18,7 +19,11 @@ func GetYoutubeData(query string) ([]byte, error) {
 	apiKey := os.Getenv("API_KEY")
 
 	maxResults := 3
-	url := fmt.Sprintf("https://www.googleapis.com/youtube/v3/search?key=%s&part=snippet&type=video&q=%s&maxResults=%d", apiKey, query, maxResults)
+
+	// Prepare the query to include recycling-related keywords
+	q := url.QueryEscape(query + " recycling")
+
+	url := fmt.Sprintf("https://www.googleapis.com/youtube/v3/search?key=%s&part=snippet&type=video&q=%s&maxResults=%d", apiKey, q, maxResults)
 
 	response, err := http.Get(url)
 	if err != nil {

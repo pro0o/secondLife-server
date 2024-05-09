@@ -22,7 +22,7 @@ func (h *APIServer) handleYoutubeSuggestion(w http.ResponseWriter, r *http.Reque
 
 	objectString := parser.ReplaceSpacesWithPlus(obj.ObjectDetected)
 
-	youtubeData, err := youtube.GetYoutubeData(objectString)
+	youtubeData, err := youtube.GetYoutubeData("how+to+recycle" + objectString)
 	if err != nil {
 		return utils.WriteJSON(w, http.StatusInternalServerError, ApiError{Error: "Error fetching YouTube data"})
 	}
