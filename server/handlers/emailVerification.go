@@ -129,12 +129,17 @@ func (h *APIServer) handleSendVerificationCode(w http.ResponseWriter, r *http.Re
 		return err
 	}
 
+	userID, err := h.store.GetUserUUID(user.Email)
+	if err != nil {
+		return err
+	}
+
 	responseData := struct {
 		UserID         uuid.UUID `json:"user_id"`
 		ProfilePicture int       `json:"profile_picture"`
 		UserName       string    `json:"user_name"`
 	}{
-		UserID:         user.UserID,
+		UserID:         userID,
 		ProfilePicture: user.ProfilePicture,
 		UserName:       user.UserName,
 	}

@@ -27,7 +27,24 @@ func (h *APIServer) createOrgHandler(w http.ResponseWriter, r *http.Request) err
 	if err := h.store.CreateOrg(&orgData); err != nil {
 		return err
 	}
-	return utils.WriteJSON(w, http.StatusCreated, "Organization created successfully")
+	userName, err := h.store.GetUserName(orgData.UserID, orgData.OrgName)
+	if err != nil {
+		return err
+	}
+	// Return created organization data
+	responseData := struct {
+		UserName    string `json:"user_name"`
+		OrgName     string `json:"org_name"`
+		Location    string `json:"location"`
+		Description string `json:"description"`
+	}{
+		UserName:    userName,
+		OrgName:     orgData.OrgName,
+		Location:    orgData.Location,
+		Description: orgData.Description,
+	}
+
+	return utils.WriteJSON(w, http.StatusCreated, responseData)
 }
 
 // /orgs?orgName=example_org_name
@@ -41,5 +58,20 @@ func (h *APIServer) getOrgHandler(w http.ResponseWriter, r *http.Request) error 
 	if err != nil {
 		return err
 	}
-	return utils.WriteJSON(w, http.StatusOK, org)
+	userName, err := h.store.GetUserName(org.UserID, org.OrgName)
+	if err != nil {
+		return err
+	}
+	responseData := struct {
+		UserName    string `json:"user_name"`
+		OrgName     string `json:"org_name"`
+		Location    string `json:"location"`
+		Description string `json:"description"`
+	}{
+		UserName:    userName,
+		OrgName:     org.OrgName,
+		Location:    org.Location,
+		Description: org.Description,
+	}
+	return utils.WriteJSON(w, http.StatusOK, responseData)
 }

@@ -28,13 +28,17 @@ func (h *APIServer) signUp(w http.ResponseWriter, r *http.Request) error {
 	if err := SendVerificationCode(newUser.Email, code); err != nil {
 		return err
 	}
+	userID, err := h.store.GetUserUUID(newUser.Email)
+	if err != nil {
+		return err
+	}
 
 	responseData := struct {
 		UserID         uuid.UUID `json:"user_id"`
 		ProfilePicture int       `json:"profile_picture"`
 		UserName       string    `json:"user_name"`
 	}{
-		UserID:         newUser.UserID,
+		UserID:         userID,
 		ProfilePicture: newUser.ProfilePicture,
 		UserName:       newUser.UserName,
 	}

@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"encoding/json"
 	"errors"
+	"log"
 	"net/http"
 	"secondLife/types"
 	"secondLife/utils"
@@ -13,7 +14,7 @@ import (
 
 func (h *APIServer) rewardPointsHandler(w http.ResponseWriter, r *http.Request) error {
 	switch {
-	case r.Method == http.MethodPut:
+	case r.Method == http.MethodPost:
 		return h.updateRewardPointsHandler(w, r)
 	case r.Method == http.MethodGet:
 		return h.getRewardPointsHandler(w, r)
@@ -47,6 +48,7 @@ func (h *APIServer) getRewardPointsHandler(w http.ResponseWriter, r *http.Reques
 	}
 
 	parsedUserID, err := uuid.Parse(userID)
+	log.Println("userID is:", parsedUserID)
 	if err != nil {
 		return utils.WriteJSON(w, http.StatusBadRequest, ApiError{Error: "invalid userID format"})
 	}
