@@ -1,11 +1,17 @@
 package storage
 
-import "secondLife/types"
+import (
+	"database/sql"
+	"errors"
+	"secondLife/types"
+
+	"github.com/google/uuid"
+)
 
 func (s *PostgresStore) CreateUser(user *types.User) error {
 	query := `
-		INSERT INTO users(email, profile_picture, userName, encrypted_password)
-		VALUES($1, $2, $3, $4)
+		INSERT INTO users(email, profile_picture, userName)
+		VALUES($1, $2, $3)
 	`
 	_, err := s.DB.Exec(
 		query,
@@ -18,6 +24,18 @@ func (s *PostgresStore) CreateUser(user *types.User) error {
 	}
 
 	return nil
+}
+
+func (s *PostgresStore) GetUserUUID(email string) (uuid.UUID, error) {
+	var userID uuid.UUID
+	err := s.DB.QueryRow("SELECT id FROM users WHERE email = $1", email).Scan(&userID)
+	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return uuid.Nil, errors.New("user not found")
+		}
+		return uuid.Nil, err
+	}
+	return userID, nil
 }
 
 func (s *PostgresStore) CheckEmailExists(email string) bool {

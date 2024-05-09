@@ -2,6 +2,8 @@ package storage
 
 import (
 	"secondLife/types"
+
+	"github.com/google/uuid"
 )
 
 func (s *PostgresStore) CreateOrg(org *types.Org) error {
@@ -21,6 +23,22 @@ func (s *PostgresStore) CreateOrg(org *types.Org) error {
 	}
 
 	return nil
+}
+func (s *PostgresStore) GetUserName(userID uuid.UUID, orgName string) (string, error) {
+	query := `
+        SELECT u.userName
+        FROM orgs o
+        JOIN users u ON o.user_id = u.id
+        WHERE o.user_id = $1 AND o.orgName = $2
+    `
+
+	var userName string
+	err := s.DB.QueryRow(query, userID, orgName).Scan(&userName)
+	if err != nil {
+		return "", err
+	}
+
+	return userName, nil
 }
 
 func (s *PostgresStore) GetOrgByName(orgName string) (*types.Org, error) {

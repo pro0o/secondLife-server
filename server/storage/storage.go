@@ -81,7 +81,7 @@ func (s *PostgresStore) createTables() error {
 
 		CREATE TABLE IF NOT EXISTS RewardPoints (
 			user_id UUID REFERENCES users(id) ON DELETE CASCADE,
-			Points INT NOT NULL DEFAULT 0
+			Points INT DEFAULT 0
 		);
 	`
 
