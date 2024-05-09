@@ -3,6 +3,7 @@ package handlers
 import (
 	"log"
 	"net/http"
+	"secondLife/storage"
 	"secondLife/utils"
 
 	"github.com/gorilla/mux"
@@ -10,6 +11,7 @@ import (
 
 type APIServer struct {
 	listenAddr string
+	store      *storage.PostgresStore
 }
 
 type apiFunc func(http.ResponseWriter, *http.Request) error
@@ -18,9 +20,10 @@ type ApiError struct {
 	Error string `json:"error"`
 }
 
-func NewAPIServer(listenAddr string) *APIServer {
+func NewAPIServer(listenAddr string, store *storage.PostgresStore) *APIServer {
 	return &APIServer{
 		listenAddr: listenAddr,
+		store:      store,
 	}
 }
 
@@ -34,6 +37,11 @@ func makeHTTPHandleFunc(f apiFunc) http.HandlerFunc {
 
 func (h *APIServer) Run() {
 	router := mux.NewRouter()
+	router.HandleFunc("/signUp", makeHTTPHandleFunc(h.signUp))
+	router.HandleFunc("/login", makeHTTPHandleFunc(h.handleSendVerificationCode))
+	router.HandleFunc("/org", makeHTTPHandleFunc(h.orgHandler))
+	router.HandleFunc("/rewardPoints", makeHTTPHandleFunc(h.rewardPointsHandler))
+
 	router.HandleFunc("/recyclingData/videos-and-maps", makeHTTPHandleFunc(h.handleRecyclingData))
 
 	log.Print("Server running on port", h.listenAddr)

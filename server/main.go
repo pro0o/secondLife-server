@@ -16,6 +16,6 @@ func main() {
 		log.Fatal(err)
 	}
 	log.Println("Connected to database.")
-	server := handlers.NewAPIServer(":8081")
+	server := handlers.NewAPIServer(":8081", store)
 	server.Run()
 }
