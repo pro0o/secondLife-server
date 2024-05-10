@@ -48,16 +48,6 @@ func (s *PostgresStore) CheckEmailExists(email string) bool {
 	return exists
 }
 
-func (s *PostgresStore) CheckPassword(email, password string) bool {
-	query := "SELECT encrypted_password FROM users WHERE email = $1"
-	var storedPassword string
-	err := s.DB.QueryRow(query, email).Scan(&storedPassword)
-	if err != nil {
-		return false
-	}
-	return storedPassword == password
-}
-
 func (s *PostgresStore) GetUserByEmail(email string) (*types.User, error) {
 	query := "SELECT id, profile_picture, userName FROM users WHERE email = $1"
 	var user types.User
