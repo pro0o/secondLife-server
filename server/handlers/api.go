@@ -37,8 +37,9 @@ func makeHTTPHandleFunc(f apiFunc) http.HandlerFunc {
 
 func (h *APIServer) Run() {
 	router := mux.NewRouter()
+	router.HandleFunc("/emailVerify", makeHTTPHandleFunc(h.handleEmailVerification))
 	router.HandleFunc("/signUp", makeHTTPHandleFunc(h.signUp))
-	router.HandleFunc("/login", makeHTTPHandleFunc(h.handleSendVerificationCode))
+	router.HandleFunc("/login", makeHTTPHandleFunc(h.login))
 	router.HandleFunc("/org", makeHTTPHandleFunc(h.orgHandler))
 	router.HandleFunc("/rewardPoints", makeHTTPHandleFunc(h.rewardPointsHandler))
 	router.HandleFunc("/recyclingData/videos", makeHTTPHandleFunc(h.handleYoutubeSuggestion))

@@ -59,9 +59,9 @@ func (s *PostgresStore) CheckPassword(email, password string) bool {
 }
 
 func (s *PostgresStore) GetUserByEmail(email string) (*types.User, error) {
-	query := "SELECT profile_picture, userName FROM users WHERE email = $1"
+	query := "SELECT id, profile_picture, userName FROM users WHERE email = $1"
 	var user types.User
-	err := s.DB.QueryRow(query, email).Scan(&user.ProfilePicture, &user.UserName)
+	err := s.DB.QueryRow(query, email).Scan(&user.UserID, &user.ProfilePicture, &user.UserName)
 	if err != nil {
 		return nil, err
 	}
