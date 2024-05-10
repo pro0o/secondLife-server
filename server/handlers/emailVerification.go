@@ -15,7 +15,7 @@ import (
 // SendVerificationCode sends a verification code to the specified email address
 func SendVerificationCode(email, code string) error {
 	mailer := gomail.NewMessage()
-	mailer.SetHeader("From", "peaktew.technology@gmail.com")
+	mailer.SetHeader("From", "SecondLife.technology@gmail.com")
 	mailer.SetHeader("To", email)
 	mailer.SetHeader("Subject", "Verification Code")
 
@@ -75,9 +75,9 @@ func SendVerificationCode(email, code string) error {
 
 <body>
     <div class="container">
-        <img src="https://drive.google.com/uc?id=15zpKpdRIZVjTAUhLxonmZ9ueadmMIQyH" alt="Company Logo" class="logo">
+        <img src="https://i.ibb.co/ngm4Yvg/second-Life1.png" alt="Company Logo" class="logo">
         <h1>Email Verification</h1>
-        <p>Thank you for signing up with <strong>PeakTew</strong>!</p>
+        <p>Thank you for signing up with <strong>SecondLife</strong>!</p>
         <p>Please use the following verification code to verify your email address:</p>
         <p class="code">` + code + `</p>
         <p class="slogan">"Together, unique in our own way"</p>
@@ -90,7 +90,7 @@ func SendVerificationCode(email, code string) error {
 	mailer.SetBody("text/html", htmlTemplate)
 	// mailer.AddAlternative("text/plain", "Your verification code is: "+code)
 
-	dialer := gomail.NewDialer("smtp.gmail.com", 587, "peaktew.technology@gmail.com", "iszadksaoikccoew")
+	dialer := gomail.NewDialer("smtp.gmail.com", 587, "SecondLife.technology@gmail.com", "iszadksaoikccoew")
 
 	if err := dialer.DialAndSend(mailer); err != nil {
 		return err
