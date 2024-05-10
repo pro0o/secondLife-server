@@ -22,12 +22,6 @@ func (h *APIServer) signUp(w http.ResponseWriter, r *http.Request) error {
 	if err := h.store.CreateUser(&newUser); err != nil {
 		return err
 	}
-
-	code := utils.GenerateRandomCode()
-
-	if err := SendVerificationCode(newUser.Email, code); err != nil {
-		return err
-	}
 	userID, err := h.store.GetUserUUID(newUser.Email)
 	if err != nil {
 		return err

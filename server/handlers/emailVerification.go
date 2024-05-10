@@ -6,7 +6,6 @@ import (
 	"net/http"
 	"secondLife/utils"
 
-	"github.com/google/uuid"
 	"gopkg.in/gomail.v2"
 )
 
@@ -15,7 +14,7 @@ import (
 // SendVerificationCode sends a verification code to the specified email address
 func SendVerificationCode(email, code string) error {
 	mailer := gomail.NewMessage()
-	mailer.SetHeader("From", "SecondLife.technology@gmail.com")
+	mailer.SetHeader("From", "peaktew.technology@gmail.com")
 	mailer.SetHeader("To", email)
 	mailer.SetHeader("Subject", "Verification Code")
 
@@ -77,7 +76,7 @@ func SendVerificationCode(email, code string) error {
     <div class="container">
         <img src="https://i.ibb.co/ngm4Yvg/second-Life1.png" alt="Company Logo" class="logo">
         <h1>Email Verification</h1>
-        <p>Thank you for signing up with <strong>SecondLife</strong>!</p>
+        <p>Thank you for signing up with <strong>second life</strong>!</p>
         <p>Please use the following verification code to verify your email address:</p>
         <p class="code">` + code + `</p>
         <p class="slogan">"Together, unique in our own way"</p>
@@ -90,7 +89,7 @@ func SendVerificationCode(email, code string) error {
 	mailer.SetBody("text/html", htmlTemplate)
 	// mailer.AddAlternative("text/plain", "Your verification code is: "+code)
 
-	dialer := gomail.NewDialer("smtp.gmail.com", 587, "SecondLife.technology@gmail.com", "iszadksaoikccoew")
+	dialer := gomail.NewDialer("smtp.gmail.com", 587, "peaktew.technology@gmail.com", "iszadksaoikccoew")
 
 	if err := dialer.DialAndSend(mailer); err != nil {
 		return err
@@ -98,7 +97,7 @@ func SendVerificationCode(email, code string) error {
 	return nil
 }
 
-func (h *APIServer) handleSendVerificationCode(w http.ResponseWriter, r *http.Request) error {
+func (h *APIServer) handleEmailVerification(w http.ResponseWriter, r *http.Request) error {
 	email := r.FormValue("email")
 	if email == "" {
 		http.Error(w, "Email address not provided", http.StatusBadRequest)
@@ -124,25 +123,5 @@ func (h *APIServer) handleSendVerificationCode(w http.ResponseWriter, r *http.Re
 		return fmt.Errorf("error encoding JSON response: %v", err)
 	}
 
-	user, err := h.store.GetUserByEmail(email)
-	if err != nil {
-		return err
-	}
-
-	userID, err := h.store.GetUserUUID(user.Email)
-	if err != nil {
-		return err
-	}
-
-	responseData := struct {
-		UserID         uuid.UUID `json:"user_id"`
-		ProfilePicture int       `json:"profile_picture"`
-		UserName       string    `json:"user_name"`
-	}{
-		UserID:         userID,
-		ProfilePicture: user.ProfilePicture,
-		UserName:       user.UserName,
-	}
-
-	return utils.WriteJSON(w, http.StatusOK, responseData)
+	return nil
 }
