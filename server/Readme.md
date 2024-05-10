@@ -42,10 +42,10 @@ curl -X POST \
 curl -X POST \
   -H "Content-Type: application/json" \
   -d '{"user_id":"your_user_id","org_name":"example_org_name","location":"example_location","description":"example_description"}' \
-  http://localhost:8081/orgHandler
+  http://localhost:8081/org
 
 curl -X GET \
-  "http://localhost:8081/orgHandler?org_name=example_org_name"
+  "http://localhost:8081/org?org_name=example_org_name"
 ```
 
 /rewardPoints:
@@ -53,10 +53,10 @@ curl -X GET \
 curl -X PUT \
   -H "Content-Type: application/json" \
   -d '{"userID":"your_user_id","points":100}' \
-  http://localhost:8081/rewardPointsHandle
+  http://localhost:8081/rewardPoints
 
 curl -X GET \
-  "http://localhost:8081/rewardPointsHandler?userID=your_user_id"
+  "http://localhost:8081/rewardPoints?userID=your_user_id"
 
 ```
 
