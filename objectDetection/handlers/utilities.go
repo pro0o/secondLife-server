@@ -44,5 +44,5 @@ func findBestLabels(probabilities []float32) []LabelResult {
 	// Sort by probability
 	sort.Sort(ByProbability(resultLabels))
 	// Return top 5 labels
-	return resultLabels[:3]
+	return resultLabels[:1]
 }

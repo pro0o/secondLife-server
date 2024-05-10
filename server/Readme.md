@@ -28,6 +28,17 @@ curl -X POST \
     }' \
   http://localhost:8081/signUp
 ```
+/signUp:
+```
+curl -X POST \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email":"example@example.com",
+    "profile_picture":1,
+    "user_name":"example_user"
+    }' \
+  http://localhost:8081/signUp
+```
 
 /login:
 ```
