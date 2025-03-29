@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package storage.v1;
+
+option go_package = "bowie/v1";
+
+message Orgs {
+  string user_id = 1;
+  string org_name = 2;
+  string location = 3;
+  string description = 4;
+}
+
+message CreateOrgRequest {
+  string user_id = 1;
+  string org_name = 2;
+  string location = 3;
+  string description = 4;
+}
+
+message CreateOrgResponse {
+  Orgs org = 1;
+}
+
+message GetOrgByNameRequest {
+  string org_name = 1;
+}
+
+message GetOrgByNameResponse {
+  Orgs org = 1;
+}

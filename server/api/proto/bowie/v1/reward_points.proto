@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package storage.v1;
+
+option go_package = "bowie/v1";
+
+message RewardPoints {
+  string user_id = 1;
+  int32 points = 2;
+}
+
+message UpdateUserPointsRequest {
+  string user_id = 1;
+  int32 points = 2;
+}
+
+message UpdateUserPointsResponse {
+  RewardPoints reward_points = 1;
+}
+
+message GetUserPointsByIDRequest {
+  string user_id = 1;
+}
+
+message GetUserPointsByIDResponse {
+  RewardPoints reward_points = 1;
+}

@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+package storage.v1;
+
+option go_package = "bowie/v1";
+
+import "bowie/v1/users.proto";
+
+message SignUpRequest {
+  string email = 1;
+  string password = 2;
+  string username = 3;
+}
+
+message SignUpResponse {
+  Users user = 1;
+  string access_token = 2;
+  string refresh_token = 3;
+}
+
+message LoginRequest {
+  string email = 1;
+  string password = 2;
+}
+
+message LoginResponse {
+  string access_token = 1;
+  string refresh_token = 2;
+}

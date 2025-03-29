@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package storage.v1;
+
+option go_package = "bowie/v1";
+
+import "bowie/v1/users.proto";
+import "bowie/v1/orgs.proto";
+import "bowie/v1/reward_points.proto";
+import "bowie/v1/auth.proto";
+
+service StorageService {
+  rpc CreateUser(CreateUserRequest) returns (CreateUserResponse) {}
+  rpc GetUserByEmail(GetUserByEmailRequest) returns (GetUserByEmailResponse) {}
+  rpc CreateOrg(CreateOrgRequest) returns (CreateOrgResponse) {}
+  rpc GetOrgByName(GetOrgByNameRequest) returns (GetOrgByNameResponse) {}
+  rpc UpdateUserPoints(UpdateUserPointsRequest) returns (UpdateUserPointsResponse) {}
+  rpc GetUserPointsByID(GetUserPointsByIDRequest) returns (GetUserPointsByIDResponse) {}
+  rpc SignUp(SignUpRequest) returns (SignUpResponse) {}
+  rpc Login(LoginRequest) returns (LoginResponse) {}
+}

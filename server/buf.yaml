@@ -1,0 +1,12 @@
+version: v2
+modules:
+  - path: api/proto
+    name: buf.build/pro0o/secondLife
+lint:
+  use:
+    - STANDARD
+  ignore:
+    - proto/google/type/datetime.proto
+breaking:
+  use:
+    - FILE
