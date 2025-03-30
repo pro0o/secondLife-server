@@ -2,8 +2,9 @@ package data
 
 import (
 	"context"
-	"secondLife/gen/bowie/public/model"
-	"secondLife/gen/bowie/public/table"
+
+	"github.com/pro0o/second-life/gen/bowie/public/model"
+	"github.com/pro0o/second-life/gen/bowie/public/table"
 
 	"github.com/go-jet/jet/v2/postgres"
 	"github.com/google/uuid"

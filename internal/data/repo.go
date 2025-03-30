@@ -4,7 +4,8 @@ import (
 	"context"
 	"database/sql"
 	"errors"
-	"secondLife/gen/bowie/public/model"
+
+	"github.com/pro0o/second-life/gen/bowie/public/model"
 
 	"github.com/google/uuid"
 )
