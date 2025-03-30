@@ -7,6 +7,16 @@ import (
 	"github.com/go-ozzo/ozzo-validation/v4/is"
 )
 
+func ValidateGetUserByEmailRequest(req *storagev1.GetUserByEmailRequest) error {
+	return validation.ValidateStruct(req,
+		validation.Field(&req.Email,
+			validation.Required,
+			validation.Length(5, 100),
+			is.Email,
+		),
+	)
+}
+
 func ValidateCreateUserRequest(req *storagev1.CreateUserRequest) error {
 	return validation.ValidateStruct(req,
 		validation.Field(&req.Email,
@@ -21,16 +31,6 @@ func ValidateCreateUserRequest(req *storagev1.CreateUserRequest) error {
 		// Profile picture is optional, but if provided, validate URL format
 		validation.Field(&req.ProfilePicture,
 			validation.When(req.ProfilePicture != 0, is.Digit), // Validate it's a digit if provided
-		),
-	)
-}
-
-func ValidateGetUserByEmailRequest(req *storagev1.GetUserByEmailRequest) error {
-	return validation.ValidateStruct(req,
-		validation.Field(&req.Email,
-			validation.Required,
-			validation.Length(5, 100),
-			is.Email,
 		),
 	)
 }

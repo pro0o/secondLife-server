@@ -1,4 +1,4 @@
-package main
+package handler
 
 import (
 	"context"
@@ -10,21 +10,21 @@ import (
 	"secondLife/internal/validation"
 )
 
-func (app *application) SignUp(
+func (h *Handler) SignUp(
 	ctx context.Context,
 	req *connect.Request[storagev1.SignUpRequest],
 ) (*connect.Response[storagev1.SignUpResponse], error) {
 	err := validation.ValidateSignUpRequest(req.Msg)
 	if err != nil {
-		app.log.Error().Err(err).Ctx(ctx).Msg("Invalid signup request")
+		h.Log.Error().Err(err).Ctx(ctx).Msg("Invalid signup request")
 		return nil, connect.NewError(connect.CodeInvalidArgument, err)
 	}
 
 	// email, password, username := transform.SignUpRequest_ToInternal(req.Msg)
 
-	// user, err := app.repo.CreateUser(ctx, email, password, username)
+	// user, err := h.Repo.CreateUser(ctx, email, password, username)
 	// if err != nil {
-	// 	app.log.Error().Err(err).Ctx(ctx).Msg("Failed to create user during signup")
+	// 	h.Log.Error().Err(err).Ctx(ctx).Msg("Failed to create user during signup")
 	// 	if errors.Is(err, data.ErrDuplicateEmail) {
 	// 		return nil, connect.NewError(connect.CodeAlreadyExists, errors.New("email already registered"))
 	// 	}
@@ -34,28 +34,28 @@ func (app *application) SignUp(
 	// // Generate tokens
 	// accessToken, refreshToken, err := app.tokenService.GenerateTokens(user.ID.String())
 	// if err != nil {
-	// 	app.log.Error().Err(err).Ctx(ctx).Msg("Failed to generate auth tokens")
+	// 	h.Log.Error().Err(err).Ctx(ctx).Msg("Failed to generate auth tokens")
 	// 	return nil, connect.NewError(connect.CodeInternal, nil)
 	// }
 
 	return connect.NewResponse(transform.SignUpResponse_FromInternal("accessToken", "refreshToken")), nil
 }
 
-func (app *application) Login(
+func (h *Handler) Login(
 	ctx context.Context,
 	req *connect.Request[storagev1.LoginRequest],
 ) (*connect.Response[storagev1.LoginResponse], error) {
 	err := validation.ValidateLoginRequest(req.Msg)
 	if err != nil {
-		app.log.Error().Err(err).Ctx(ctx).Msg("Invalid login request")
+		h.Log.Error().Err(err).Ctx(ctx).Msg("Invalid login request")
 		return nil, connect.NewError(connect.CodeInvalidArgument, err)
 	}
 
 	// email, password := transform.LoginRequest_ToInternal(req.Msg)
 
-	// user, err := app.repo.AuthenticateUser(ctx, email, password)
+	// user, err := h.Repo.AuthenticateUser(ctx, email, password)
 	// if err != nil {
-	// 	app.log.Error().Err(err).Ctx(ctx).Msg("Authentication failed")
+	// 	h.Log.Error().Err(err).Ctx(ctx).Msg("Authentication failed")
 	// 	if errors.Is(err, data.ErrInvalidCredentials) {
 	// 		return nil, connect.NewError(connect.CodeUnauthenticated, errors.New("invalid email or password"))
 	// 	}
@@ -65,7 +65,7 @@ func (app *application) Login(
 	// // Generate tokens
 	// accessToken, refreshToken, err := app.tokenService.GenerateTokens(user.ID.String())
 	// if err != nil {
-	// 	app.log.Error().Err(err).Ctx(ctx).Msg("Failed to generate auth tokens")
+	// 	h.Log.Error().Err(err).Ctx(ctx).Msg("Failed to generate auth tokens")
 	// 	return nil, connect.NewError(connect.CodeInternal, nil)
 	// }
 

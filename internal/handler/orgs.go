@@ -1,4 +1,4 @@
-package main
+package handler
 
 import (
 	"context"
@@ -12,21 +12,21 @@ import (
 	"secondLife/internal/validation"
 )
 
-func (app *application) CreateOrg(
+func (h *Handler) CreateOrg(
 	ctx context.Context,
 	req *connect.Request[storagev1.CreateOrgRequest],
 ) (*connect.Response[storagev1.CreateOrgResponse], error) {
 	err := validation.ValidateCreateOrgRequest(req.Msg)
 	if err != nil {
-		app.log.Error().Err(err).Msg("Invalid create org request")
+		h.Log.Error().Err(err).Msg("Invalid create org request")
 		return nil, connect.NewError(connect.CodeInvalidArgument, err)
 	}
 
 	userID, orgName, location, description := transform.CreateOrgRequest_ToInternal(req.Msg)
 
-	org, err := app.repo.CreateOrg(ctx, userID, orgName, location, description)
+	org, err := h.Repo.CreateOrg(ctx, userID, orgName, location, description)
 	if err != nil {
-		app.log.Error().Err(err).Msg("Failed to create organization")
+		h.Log.Error().Err(err).Msg("Failed to create organization")
 		if errors.Is(err, data.ErrDuplicateOrgName) {
 			return nil, connect.NewError(connect.CodeAlreadyExists, errors.New("Organization name already exists"))
 		}
@@ -36,24 +36,24 @@ func (app *application) CreateOrg(
 	return connect.NewResponse(transform.CreateOrgResponse_FromInternal(org)), nil
 }
 
-func (app *application) GetOrgByName(
+func (h *Handler) GetOrgByName(
 	ctx context.Context,
 	req *connect.Request[storagev1.GetOrgByNameRequest],
 ) (*connect.Response[storagev1.GetOrgByNameResponse], error) {
 	err := validation.ValidateGetOrgByNameRequest(req.Msg)
 	if err != nil {
-		app.log.Error().Err(err).Msg("Invalid get org by name request")
+		h.Log.Error().Err(err).Msg("Invalid get org by name request")
 		return nil, connect.NewError(connect.CodeInvalidArgument, err)
 	}
 
 	orgName := transform.GetOrgByNameRequest_ToInternal(req.Msg)
 
-	org, err := app.repo.GetOrgByName(ctx, orgName)
+	org, err := h.Repo.GetOrgByName(ctx, orgName)
 	if err != nil {
 		if errors.Is(err, data.ErrNotFound) {
 			return nil, connect.NewError(connect.CodeNotFound, errors.New("Organization not found"))
 		}
-		app.log.Error().Err(err).Msg("Failed to get organization by name")
+		h.Log.Error().Err(err).Msg("Failed to get organization by name")
 		return nil, connect.NewError(connect.CodeInternal, nil)
 	}
 

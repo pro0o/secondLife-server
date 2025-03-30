@@ -1,4 +1,4 @@
-package main
+package handler
 
 import (
 	"context"
@@ -12,21 +12,21 @@ import (
 	"connectrpc.com/connect"
 )
 
-func (app *application) CreateUser(
+func (h *Handler) CreateUser(
 	ctx context.Context,
 	req *connect.Request[storagev1.CreateUserRequest],
 ) (*connect.Response[storagev1.CreateUserResponse], error) {
 	err := validation.ValidateCreateUserRequest(req.Msg)
 	if err != nil {
-		app.log.Error().Err(err).Ctx(ctx).Msg("invalid create user request")
+		h.Log.Error().Err(err).Ctx(ctx).Msg("invalid create user request")
 		return nil, connect.NewError(connect.CodeInvalidArgument, err)
 	}
 
 	email, profilePicture, username := transform.CreateUserRequest_ToInternal(req.Msg)
 
-	user, err := app.repo.CreateUser(ctx, email, int32(profilePicture), username)
+	user, err := h.Repo.CreateUser(ctx, email, int32(profilePicture), username)
 	if err != nil {
-		app.log.Error().Err(err).Ctx(ctx).Msg("failed to create user")
+		h.Log.Error().Err(err).Ctx(ctx).Msg("failed to create user")
 		if errors.Is(err, data.ErrDuplicateEmail) {
 			return nil, connect.NewError(connect.CodeAlreadyExists, errors.New("email already exists"))
 		}
@@ -36,24 +36,24 @@ func (app *application) CreateUser(
 	return connect.NewResponse(transform.CreateUserResponse_FromInternal(user)), nil
 }
 
-func (app *application) GetUserByEmail(
+func (h *Handler) GetUserByEmail(
 	ctx context.Context,
 	req *connect.Request[storagev1.GetUserByEmailRequest],
 ) (*connect.Response[storagev1.GetUserByEmailResponse], error) {
 	err := validation.ValidateGetUserByEmailRequest(req.Msg)
 	if err != nil {
-		app.log.Error().Err(err).Ctx(ctx).Msg("invalid get user by email request")
+		h.Log.Error().Err(err).Ctx(ctx).Msg("invalid get user by email request")
 		return nil, connect.NewError(connect.CodeInvalidArgument, err)
 	}
 
 	email := transform.GetUserByEmailRequest_ToInternal(req.Msg)
 
-	user, err := app.repo.GetUserByEmail(ctx, email)
+	user, err := h.Repo.GetUserByEmail(ctx, email)
 	if err != nil {
 		if errors.Is(err, data.ErrNotFound) {
 			return nil, connect.NewError(connect.CodeNotFound, errors.New("user not found"))
 		}
-		app.log.Error().Err(err).Ctx(ctx).Msg("failed to get user by email")
+		h.Log.Error().Err(err).Ctx(ctx).Msg("failed to get user by email")
 		return nil, connect.NewError(connect.CodeInternal, nil)
 	}
 

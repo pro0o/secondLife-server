@@ -1,0 +1,17 @@
+meta {
+  name: Create User
+  type: http
+  seq: 1
+}
+post {
+  url: {{base_url}}/storage.v1.StorageService/CreateUser
+  body: json
+  auth: none
+}
+body:json {
+  {
+    "email": "user@example.com",
+    "profile_picture": 1,
+    "username": "testuser"
+  }
+}

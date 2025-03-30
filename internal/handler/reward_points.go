@@ -1,4 +1,4 @@
-package main
+package handler
 
 import (
 	"context"
@@ -12,48 +12,48 @@ import (
 	"connectrpc.com/connect"
 )
 
-func (app *application) UpdateUserPoints(
+func (h *Handler) UpdateUserPoints(
 	ctx context.Context,
 	req *connect.Request[storagev1.UpdateUserPointsRequest],
 ) (*connect.Response[storagev1.UpdateUserPointsResponse], error) {
 	err := validation.ValidateUpdateUserPointsRequest(req.Msg)
 	if err != nil {
-		app.log.Error().Err(err).Ctx(ctx).Msg("invalid update user points request")
+		h.Log.Error().Err(err).Ctx(ctx).Msg("invalid update user points request")
 		return nil, connect.NewError(connect.CodeInvalidArgument, err)
 	}
 
 	userID, points := transform.UpdateUserPointsRequest_ToInternal(req.Msg)
 
-	rewardPoints, err := app.repo.UpdateUserPoints(ctx, userID, points)
+	rewardPoints, err := h.Repo.UpdateUserPoints(ctx, userID, points)
 	if err != nil {
 		if errors.Is(err, data.ErrNotFound) {
 			return nil, connect.NewError(connect.CodeNotFound, errors.New("user not found"))
 		}
-		app.log.Error().Err(err).Ctx(ctx).Msg("failed to update user points")
+		h.Log.Error().Err(err).Ctx(ctx).Msg("failed to update user points")
 		return nil, connect.NewError(connect.CodeInternal, nil)
 	}
 
 	return connect.NewResponse(transform.UpdateUserPointsResponse_FromInternal(rewardPoints)), nil
 }
 
-func (app *application) GetUserPointsByID(
+func (h *Handler) GetUserPointsByID(
 	ctx context.Context,
 	req *connect.Request[storagev1.GetUserPointsByIDRequest],
 ) (*connect.Response[storagev1.GetUserPointsByIDResponse], error) {
 	err := validation.ValidateGetUserPointsByIDRequest(req.Msg)
 	if err != nil {
-		app.log.Error().Err(err).Ctx(ctx).Msg("invalid get user points request")
+		h.Log.Error().Err(err).Ctx(ctx).Msg("invalid get user points request")
 		return nil, connect.NewError(connect.CodeInvalidArgument, err)
 	}
 
 	userID := transform.GetUserPointsByIDRequest_ToInternal(req.Msg)
 
-	rewardPoints, err := app.repo.GetUserPointsByID(ctx, userID)
+	rewardPoints, err := h.Repo.GetUserPointsByID(ctx, userID)
 	if err != nil {
 		if errors.Is(err, data.ErrNotFound) {
 			return nil, connect.NewError(connect.CodeNotFound, errors.New("user points not found"))
 		}
-		app.log.Error().Err(err).Ctx(ctx).Msg("failed to get user points")
+		h.Log.Error().Err(err).Ctx(ctx).Msg("failed to get user points")
 		return nil, connect.NewError(connect.CodeInternal, nil)
 	}
 

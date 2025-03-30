@@ -16,7 +16,7 @@ func ValidateSignUpRequest(req *storagev1.SignUpRequest) error {
 		),
 		validation.Field(&req.Password,
 			validation.Required,
-			validation.Length(8, 50), // Assuming minimum password length of 8
+			validation.Length(8, 50),
 		),
 		validation.Field(&req.Username,
 			validation.Required,
@@ -34,7 +34,7 @@ func ValidateLoginRequest(req *storagev1.LoginRequest) error {
 		),
 		validation.Field(&req.Password,
 			validation.Required,
-			validation.Length(1, 50), // Just checking it's not empty
+			validation.Length(1, 50),
 		),
 	)
 }

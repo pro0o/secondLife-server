@@ -1,0 +1,15 @@
+meta {
+  name: Get User By Email
+  type: http
+  seq: 2
+}
+post {
+  url: {{base_url}}/storage.v1.StorageService/GetUserByEmail
+  body: json
+  auth: none
+}
+body:json {
+  {
+    "email": "user@example.com"
+  }
+}

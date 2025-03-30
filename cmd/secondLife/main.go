@@ -14,22 +14,17 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
-	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/log"
 	"golang.org/x/net/http2"
 	"golang.org/x/net/http2/h2c"
 
 	"secondLife/internal/data"
+	"secondLife/internal/handler"
 )
 
 const (
 	defaultPort = "8080"
 )
-
-type application struct {
-	repo data.Repository
-	log  zerolog.Logger
-}
 
 func main() {
 	os.Exit(run())
@@ -67,12 +62,9 @@ func run() int {
 	}
 	defer db.Close()
 
-	app := &application{
-		repo: data.NewRepository(ctx, db),
-		log:  logger,
-	}
-
-	router := app.setupRouter()
+	repo := data.NewRepository(ctx, db)
+	appHandler := handler.NewHandler(repo, logger)
+	router := setupRouter(appHandler)
 
 	logger.Info().Str("addr", addr).Msg("starting server")
 	err = http.ListenAndServe(
@@ -101,7 +93,8 @@ func setupDatabase(dsn string) (*sql.DB, error) {
 
 	return db, nil
 }
-func (app *application) setupRouter() chi.Router {
+
+func setupRouter(appHandler *handler.Handler) chi.Router {
 	r := chi.NewRouter()
 
 	r.Use(middleware.Logger)
@@ -113,8 +106,9 @@ func (app *application) setupRouter() chi.Router {
 		w.Write([]byte("OK"))
 	})
 
-	r.Mount(storagev1connect.NewStorageServiceHandler(app, connect.WithInterceptors(
-		ServiceVersionInterceptor("StorageService", "v1"),
+	r.Mount(storagev1connect.NewStorageServiceHandler(appHandler, connect.WithInterceptors(
+		handler.ServiceVersionInterceptor("StorageService", "v1"),
+		handler.LoggingInterceptor(&appHandler.Log),
 	)))
 	return r
 }
