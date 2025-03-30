@@ -1,0 +1,29 @@
+FROM golang:1.23.5 AS builder
+
+WORKDIR /app
+
+COPY go.mod go.sum ./
+RUN go mod download
+
+COPY . ./
+
+RUN go run ./cmd/gen/generate.go
+
+RUN buf generate
+
+RUN CGO_ENABLED=0 GOOS=linux go build -o server ./main
+
+FROM alpine:latest
+
+RUN apk --no-cache add ca-certificates
+
+WORKDIR /app/
+
+COPY --from=builder /app/server .
+
+RUN mkdir -p /app/data
+RUN chmod +x /app/server
+
+EXPOSE 8080
+
+CMD ["/app/server"]

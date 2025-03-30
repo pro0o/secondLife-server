@@ -1,0 +1,16 @@
+meta {
+  name: Sign Up
+  type: http
+  seq: 7
+}
+post {
+  url: {{base_url}}/storage.v1.StorageService/SignUp
+  body: json
+  auth: none
+}
+body:json {
+  {
+    "email": "newuser@example.com",
+    "password": "password123"
+  }
+}

@@ -1,0 +1,18 @@
+meta {
+  name: Create Org
+  type: http
+  seq: 3
+}
+post {
+  url: {{base_url}}/storage.v1.StorageService/CreateOrg
+  body: json
+  auth: none
+}
+body:json {
+  {
+    "user_id": "user123",
+    "org_name": "Test Organization",
+    "location": "San Francisco, CA",
+    "description": "This is a test organization"
+  }
+}

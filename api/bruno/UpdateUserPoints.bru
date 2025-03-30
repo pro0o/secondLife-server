@@ -1,0 +1,16 @@
+meta {
+  name: Update User Points
+  type: http
+  seq: 5
+}
+post {
+  url: {{base_url}}/storage.v1.StorageService/UpdateUserPoints
+  body: json
+  auth: none
+}
+body:json {
+  {
+    "user_id": "user123",
+    "points": 100
+  }
+}

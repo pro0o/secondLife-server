@@ -1,0 +1,15 @@
+meta {
+  name: Get Org By Name
+  type: http
+  seq: 4
+}
+post {
+  url: {{base_url}}/storage.v1.StorageService/GetOrgByName
+  body: json
+  auth: none
+}
+body:json {
+  {
+    "org_name": "Test Organization"
+  }
+}
