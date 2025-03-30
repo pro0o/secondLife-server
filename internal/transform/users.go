@@ -1,8 +1,8 @@
 package transform
 
 import (
-	"secondLife/gen/bowie/public/model"
-	storagev1 "secondLife/gen/bowie/v1"
+	"github.com/pro0o/second-life/gen/bowie/public/model"
+	storagev1 "github.com/pro0o/second-life/gen/bowie/v1"
 
 	"github.com/google/uuid"
 )

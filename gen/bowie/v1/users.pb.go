@@ -303,7 +303,7 @@ const file_bowie_v1_users_proto_rawDesc = "" +
 	"\x16GetUserByEmailResponse\x12%\n" +
 	"\x04user\x18\x01 \x01(\v2\x11.storage.v1.UsersR\x04userB\x88\x01\n" +
 	"\x0ecom.storage.v1B\n" +
-	"UsersProtoP\x01Z!secondLife/gen/bowie/v1;storagev1\xa2\x02\x03SXX\xaa\x02\n" +
+	"UsersProtoP\x01Z!github.com/pro0o/second-life/gen/bowie/v1;storagev1\xa2\x02\x03SXX\xaa\x02\n" +
 	"Storage.V1\xca\x02\n" +
 	"Storage\\V1\xe2\x02\x16Storage\\V1\\GPBMetadata\xea\x02\vStorage::V1b\x06proto3"
 

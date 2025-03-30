@@ -275,7 +275,7 @@ const file_bowie_v1_reward_points_proto_rawDesc = "" +
 	"\auser_id\x18\x01 \x01(\tR\x06userId\"Z\n" +
 	"\x19GetUserPointsByIDResponse\x12=\n" +
 	"\rreward_points\x18\x01 \x01(\v2\x18.storage.v1.RewardPointsR\frewardPointsB\x8f\x01\n" +
-	"\x0ecom.storage.v1B\x11RewardPointsProtoP\x01Z!secondLife/gen/bowie/v1;storagev1\xa2\x02\x03SXX\xaa\x02\n" +
+	"\x0ecom.storage.v1B\x11RewardPointsProtoP\x01Z!github.com/pro0o/second-life/gen/bowie/v1;storagev1\xa2\x02\x03SXX\xaa\x02\n" +
 	"Storage.V1\xca\x02\n" +
 	"Storage\\V1\xe2\x02\x16Storage\\V1\\GPBMetadata\xea\x02\vStorage::V1b\x06proto3"
 

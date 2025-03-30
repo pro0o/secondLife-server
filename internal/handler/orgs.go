@@ -6,10 +6,10 @@ import (
 
 	"connectrpc.com/connect"
 
-	storagev1 "secondLife/gen/bowie/v1"
-	"secondLife/internal/data"
-	"secondLife/internal/transform"
-	"secondLife/internal/validation"
+	storagev1 "github.com/pro0o/second-life/gen/bowie/v1"
+	"github.com/pro0o/second-life/internal/data"
+	"github.com/pro0o/second-life/internal/transform"
+	"github.com/pro0o/second-life/internal/validation"
 )
 
 func (h *Handler) CreateOrg(

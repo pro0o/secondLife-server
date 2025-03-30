@@ -1,7 +1,7 @@
 package transform
 
 import (
-	storagev1 "secondLife/gen/bowie/v1"
+	storagev1 "github.com/pro0o/second-life/gen/bowie/v1"
 )
 
 func SignUpRequest_ToInternal(req *storagev1.SignUpRequest) (string, string, string) {

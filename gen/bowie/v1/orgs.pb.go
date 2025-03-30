@@ -311,7 +311,7 @@ const file_bowie_v1_orgs_proto_rawDesc = "" +
 	"\borg_name\x18\x01 \x01(\tR\aorgName\":\n" +
 	"\x14GetOrgByNameResponse\x12\"\n" +
 	"\x03org\x18\x01 \x01(\v2\x10.storage.v1.OrgsR\x03orgB\x87\x01\n" +
-	"\x0ecom.storage.v1B\tOrgsProtoP\x01Z!secondLife/gen/bowie/v1;storagev1\xa2\x02\x03SXX\xaa\x02\n" +
+	"\x0ecom.storage.v1B\tOrgsProtoP\x01Z!github.com/pro0o/second-life/gen/bowie/v1;storagev1\xa2\x02\x03SXX\xaa\x02\n" +
 	"Storage.V1\xca\x02\n" +
 	"Storage\\V1\xe2\x02\x16Storage\\V1\\GPBMetadata\xea\x02\vStorage::V1b\x06proto3"
 

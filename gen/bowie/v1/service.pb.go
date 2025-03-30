@@ -36,7 +36,7 @@ const file_bowie_v1_service_proto_rawDesc = "" +
 	"\x11GetUserPointsByID\x12$.storage.v1.GetUserPointsByIDRequest\x1a%.storage.v1.GetUserPointsByIDResponse\"\x00\x12A\n" +
 	"\x06SignUp\x12\x19.storage.v1.SignUpRequest\x1a\x1a.storage.v1.SignUpResponse\"\x00\x12>\n" +
 	"\x05Login\x12\x18.storage.v1.LoginRequest\x1a\x19.storage.v1.LoginResponse\"\x00B\x8a\x01\n" +
-	"\x0ecom.storage.v1B\fServiceProtoP\x01Z!secondLife/gen/bowie/v1;storagev1\xa2\x02\x03SXX\xaa\x02\n" +
+	"\x0ecom.storage.v1B\fServiceProtoP\x01Z!github.com/pro0o/second-life/gen/bowie/v1;storagev1\xa2\x02\x03SXX\xaa\x02\n" +
 	"Storage.V1\xca\x02\n" +
 	"Storage\\V1\xe2\x02\x16Storage\\V1\\GPBMetadata\xea\x02\vStorage::V1b\x06proto3"
 

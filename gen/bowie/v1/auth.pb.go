@@ -265,7 +265,7 @@ const file_bowie_v1_auth_proto_rawDesc = "" +
 	"\rLoginResponse\x12!\n" +
 	"\faccess_token\x18\x01 \x01(\tR\vaccessToken\x12#\n" +
 	"\rrefresh_token\x18\x02 \x01(\tR\frefreshTokenB\x87\x01\n" +
-	"\x0ecom.storage.v1B\tAuthProtoP\x01Z!secondLife/gen/bowie/v1;storagev1\xa2\x02\x03SXX\xaa\x02\n" +
+	"\x0ecom.storage.v1B\tAuthProtoP\x01Z!github.com/pro0o/second-life/gen/bowie/v1;storagev1\xa2\x02\x03SXX\xaa\x02\n" +
 	"Storage.V1\xca\x02\n" +
 	"Storage\\V1\xe2\x02\x16Storage\\V1\\GPBMetadata\xea\x02\vStorage::V1b\x06proto3"
 

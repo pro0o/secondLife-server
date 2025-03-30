@@ -9,7 +9,7 @@ import (
 	context "context"
 	errors "errors"
 	http "net/http"
-	v1 "secondLife/gen/bowie/v1"
+	v1 "github.com/pro0o/second-life/gen/bowie/v1"
 	strings "strings"
 )
 
