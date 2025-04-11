@@ -1,0 +1,3 @@
+[submodule "secondlife"]
+	path = secondlife
+	url = https://github.com/Codewire-github/SecondLife-front.git

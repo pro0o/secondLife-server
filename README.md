@@ -62,7 +62,7 @@ docker build -t second-life .
 docker run -p 8080:8080 second-life
 ```
 
-## Screenshots & Designs
+## Screenshots
 <img src="./assets/1.png" alt="second life" />
 <img src="./assets/2.png" alt="second life" />
 <img src="./assets/3.png" alt="second life" />
